@@ -2,14 +2,11 @@ $(document).on 'emoji:ready', ->
   $(".input-search").focus()
   $(".loading").remove()
 
-  if navigator.userAgent.match(/iPad|iPhone/i)
-    $(document).on 'click', '.emoji-code', ->
-      this.selectionStart = 0
-      this.selectionEnd = this.value.length
-  else
-    clip = new ZeroClipboard( $("[data-clipboard-text]"),{ moviePath: "/assets/zeroclipboard.swf"} )
-    clip.on "complete", (_, args) -> $("<div class=alert></div>").text("Copied " + args.text).appendTo("body").fadeIn().delay(1000).fadeOut()
-    $(".emoji-code").attr("readonly", "readonly")
+  $('.emoji-wrapper').on 'click', (e)->
+    if e.currentTarget.dataset.clipboardText.length > 0
+      newvalue = $('.speedy-filter').val().substring(0, $('.speedy-filter').val().lastIndexOf(" ")) + " " + e.currentTarget.dataset.clipboardText + " "
+      $('.speedy-filter').val(newvalue)
+      $('.speedy-filter').focus()
 
 focusOnSearch = (e) ->
   if e.keyCode == 191 && !$(".input-search:focus").length

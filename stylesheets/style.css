@@ -130,6 +130,8 @@ ul {
     margin-top: -3px; }
   .emoji-wrapper input {
     margin-left: 25px; }
+  .emoji-wrapper * {
+    cursor: pointer; }
 
 .global-zeroclipboard-container {
   background-color: rgba(0, 0, 0, 0.02); }
@@ -277,3 +279,5 @@ code {
 
   .emoji-wrapper {
     padding: 0; } }
+
+/*# sourceMappingURL=style.css.map */

@@ -13,6 +13,7 @@ search = function(keyword) {
   if (keyword == null) {
     keyword = '';
   }
+  keyword = keyword.split(" ").pop();
   $('.keyword').text(keyword);
   keyword = keyword.trim();
   if (window.speedy_keyword !== keyword) {

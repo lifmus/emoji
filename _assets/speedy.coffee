@@ -6,6 +6,7 @@ $(document).on 'emoji:ready', ->
 
 search = (keyword) ->
   keyword ?= ''
+  keyword = keyword.split(" ").pop()
   $('.keyword').text keyword
   keyword = keyword.trim()
 

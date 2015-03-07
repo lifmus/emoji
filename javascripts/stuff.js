@@ -2,23 +2,16 @@
 var focusOnSearch;
 
 $(document).on('emoji:ready', function() {
-  var clip;
   $(".input-search").focus();
   $(".loading").remove();
-  if (navigator.userAgent.match(/iPad|iPhone/i)) {
-    return $(document).on('click', '.emoji-code', function() {
-      this.selectionStart = 0;
-      return this.selectionEnd = this.value.length;
-    });
-  } else {
-    clip = new ZeroClipboard($("[data-clipboard-text]"), {
-      moviePath: "/assets/zeroclipboard.swf"
-    });
-    clip.on("complete", function(_, args) {
-      return $("<div class=alert></div>").text("Copied " + args.text).appendTo("body").fadeIn().delay(1000).fadeOut();
-    });
-    return $(".emoji-code").attr("readonly", "readonly");
-  }
+  return $('.emoji-wrapper').on('click', function(e) {
+    var newvalue;
+    if (e.currentTarget.dataset.clipboardText.length > 0) {
+      newvalue = $('.speedy-filter').val().substring(0, $('.speedy-filter').val().lastIndexOf(" ")) + " " + e.currentTarget.dataset.clipboardText + " ";
+      $('.speedy-filter').val(newvalue);
+      return $('.speedy-filter').focus();
+    }
+  });
 });
 
 focusOnSearch = function(e) {
