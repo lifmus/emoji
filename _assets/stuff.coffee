@@ -39,11 +39,13 @@ $(document).on 'click', '[data-clipboard-text]', ->
 $(document).on 'click', '.js-hide-text', ->
   $('.emojis-container').toggleClass('hide-text')
   showorhide = if $('.emojis-container').hasClass('hide-text') then 'hide' else 'show'
+  $(".input-search").focus()
   ga 'send', 'event', 'toggle text', showorhide
   false
 
 $(document).on 'click', '.js-clear-search, .mojigroup.active', ->
-  location.hash = ""
+  $('.speedy-filter').val('')
+  $(".input-search").focus()
   false
 
 $(document).on 'click', '.js-contribute', ->

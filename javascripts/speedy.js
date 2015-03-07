@@ -2,11 +2,7 @@
 var search, setRelatedDOMVisibility;
 
 $(document).on('emoji:ready', function() {
-  if (location.hash.length) {
-    return search($('.speedy-filter').val(location.hash.substr(1)).val());
-  } else {
-    return search();
-  }
+  return search($('.speedy-filter').val());
 });
 
 search = function(keyword) {
@@ -46,7 +42,9 @@ setRelatedDOMVisibility = function(keyword) {
 };
 
 $(document).on('search keyup', '.speedy-filter', function() {
-  return location.hash = $(this).val();
+  search($('.speedy-filter').val());
+  $('[href^="#"]').removeClass('active');
+  return $("[href='" + location.hash + "']").addClass('active');
 });
 
 $(document).on('click', '.group', function() {
@@ -59,9 +57,3 @@ $(document).on('click', '.speedy-remover', function() {
   $('.result').show();
   return location.hash = '';
 });
-
-window.onhashchange = function() {
-  search($('.speedy-filter').val(location.hash.substr(1)).val());
-  $('[href^="#"]').removeClass('active');
-  return $("[href='" + location.hash + "']").addClass('active');
-};

@@ -53,12 +53,14 @@ $(document).on('click', '.js-hide-text', function() {
   var showorhide;
   $('.emojis-container').toggleClass('hide-text');
   showorhide = $('.emojis-container').hasClass('hide-text') ? 'hide' : 'show';
+  $(".input-search").focus();
   ga('send', 'event', 'toggle text', showorhide);
   return false;
 });
 
 $(document).on('click', '.js-clear-search, .mojigroup.active', function() {
-  location.hash = "";
+  $('.speedy-filter').val('');
+  $(".input-search").focus();
   return false;
 });
 

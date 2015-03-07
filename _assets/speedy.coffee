@@ -1,8 +1,5 @@
 $(document).on 'emoji:ready', ->
-  if location.hash.length
-    search $('.speedy-filter').val(location.hash.substr(1)).val()
-  else
-    search()
+  search $('.speedy-filter').val()
 
 search = (keyword) ->
   keyword ?= ''
@@ -32,7 +29,9 @@ setRelatedDOMVisibility = (keyword) ->
       ga 'send', 'event', 'search', keyword
 
 $(document).on 'search keyup', '.speedy-filter', ->
-  location.hash = $(this).val()
+  search $('.speedy-filter').val()
+  $('[href^="#"]').removeClass('active')
+  $("[href='#{location.hash}']").addClass('active')
 
 $(document).on 'click', '.group', ->
   ga 'send', 'event', 'search', 'quick group search'
@@ -42,8 +41,3 @@ $(document).on 'click', '.speedy-remover', ->
   $('.speedy-filter').val('')
   $('.result').show()
   location.hash = ''
-
-window.onhashchange = ->
-  search $('.speedy-filter').val(location.hash.substr(1)).val()
-  $('[href^="#"]').removeClass('active')
-  $("[href='#{location.hash}']").addClass('active')
