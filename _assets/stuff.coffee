@@ -7,6 +7,27 @@ $(document).on 'emoji:ready', ->
       newvalue = $('.speedy-filter').val().substring(0, $('.speedy-filter').val().lastIndexOf(" ")) + " " + e.currentTarget.dataset.clipboardText + " "
       $('.speedy-filter').val(newvalue)
       $('.speedy-filter').focus()
+      updatePreview()
+
+  $(".input-search").on 'input', ->
+    updatePreview()
+
+updatePreview = ->
+  @previewText = $('.speedy-filter').val()
+
+  replaceEmojiTextWithHTML = (emojiTextMatches) =>
+    @previewText
+    $.each emojiTextMatches, (emojiIndex, emojiCode) =>
+      emojiCode = emojiCode.replace(/:/g, "")
+      emojiHtml = "<div class='emoji s_" + emojiCode + "' title='"+ emojiCode + "'></div>"
+      @previewText = @previewText.replace(emojiCode, emojiHtml).replace(/:/g, "")
+    @previewText
+
+  emojiTextMatches = $('.speedy-filter').val().match(/:[a-z0-9 _+-]*:/g)
+  console.log emojiTextMatches
+  @previewText = replaceEmojiTextWithHTML(emojiTextMatches, previewText) if emojiTextMatches
+  $('.text-preview').html(@previewText)
+
 
 focusOnSearch = (e) ->
   if e.keyCode == 191 && !$(".input-search:focus").length
