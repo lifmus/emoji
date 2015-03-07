@@ -67,6 +67,8 @@ $(document).on 'click', '.js-hide-text', ->
 $(document).on 'click', '.js-clear-search, .mojigroup.active', ->
   $('.speedy-filter').val('')
   $(".input-search").focus()
+  updatePreview()
+  search ''
   false
 
 $(document).on 'click', '.js-contribute', ->

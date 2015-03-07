@@ -88,6 +88,8 @@ $(document).on('click', '.js-hide-text', function() {
 $(document).on('click', '.js-clear-search, .mojigroup.active', function() {
   $('.speedy-filter').val('');
   $(".input-search").focus();
+  updatePreview();
+  search('');
   return false;
 });
 
