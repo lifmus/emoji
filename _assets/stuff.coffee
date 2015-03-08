@@ -3,8 +3,9 @@ $(document).on 'emoji:ready', ->
   $(".loading").remove()
 
   $('.emoji-wrapper').on 'click', (e)->
-    if e.currentTarget.dataset.clipboardText.length > 0
-      newvalue = $('.speedy-filter').val().substring(0, $('.speedy-filter').val().lastIndexOf(" ")) + " " + e.currentTarget.dataset.clipboardText + " "
+    getEmojiDictionary(e.currentTarget.dataset.clipboardText).then (emojiDictionary) ->
+      outputText = emojiDictionary[e.currentTarget.dataset.clipboardText] || e.currentTarget.dataset.clipboardText
+      newvalue = $('.speedy-filter').val().substring(0, $('.speedy-filter').val().lastIndexOf(" ")) + " " + outputText + " "
       $('.speedy-filter').val(newvalue)
       $('.speedy-filter').focus()
       updatePreview()
@@ -24,7 +25,6 @@ updatePreview = ->
     @previewText
 
   emojiTextMatches = $('.speedy-filter').val().match(/:[a-z0-9 _+-]*:/g)
-  console.log emojiTextMatches
   @previewText = replaceEmojiTextWithHTML(emojiTextMatches, previewText) if emojiTextMatches
   $('.text-preview').html(@previewText)
 
@@ -37,6 +37,9 @@ focusOnSearch = (e) ->
       t.selectionStart = 0
       t.selectionEnd = t.value.length
     false
+
+getEmojiDictionary = () ->
+  $.getJSON 'emoji_dictionary.json'
 
 $.getJSON 'emojis.json', (emojis) ->
   container = $('.emojis-container')
