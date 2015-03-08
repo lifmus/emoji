@@ -2,13 +2,13 @@ $(document).on 'emoji:ready', ->
   $(".input-search").focus()
   $(".loading").remove()
 
-  $('.emoji-wrapper').on 'click', (e)->
-    getEmojiDictionary(e.currentTarget.dataset.clipboardText).then (emojiDictionary) ->
-      outputText = emojiDictionary[e.currentTarget.dataset.clipboardText] || e.currentTarget.dataset.clipboardText
-      newvalue = $('.speedy-filter').val().substring(0, $('.speedy-filter').val().lastIndexOf(" ")) + " " + outputText + " "
-      $('.speedy-filter').val(newvalue)
-      $('.speedy-filter').focus()
-      updatePreview()
+  $('.emoji-wrapper').on 'click', (e) ->
+    if window.outputType == 'unicode'
+      getEmojiDictionary(e.currentTarget.dataset.clipboardText).then (emojiDictionary) ->
+        outputText = emojiDictionary[e.currentTarget.dataset.clipboardText] || e.currentTarget.dataset.clipboardText
+        updateValue(outputText)
+    else
+      updateValue(e.currentTarget.dataset.clipboardText)
 
   $(".input-search").on 'input', ->
     updatePreview()
@@ -37,6 +37,12 @@ focusOnSearch = (e) ->
       t.selectionStart = 0
       t.selectionEnd = t.value.length
     false
+
+updateValue = (outputText) ->
+  newvalue = $('.speedy-filter').val().substring(0, $('.speedy-filter').val().lastIndexOf(" ")) + " " + outputText + " "
+  $('.speedy-filter').val(newvalue)
+  $('.speedy-filter').focus()
+  updatePreview()
 
 getEmojiDictionary = () ->
   $.getJSON 'emoji_dictionary.json'
@@ -76,3 +82,15 @@ $(document).on 'click', '.js-clear-search, .mojigroup.active', ->
 
 $(document).on 'click', '.js-contribute', ->
   ga 'send', 'event', 'contribute', 'click'
+
+$(document).on 'click', '.toggle-output', ->
+  if window.outputType == 'unicode'
+    window.outputType = 'colon'
+    $('.output-sample').text(':smile:')
+  else
+    window.outputType = 'unicode'
+    $('.output-sample').text('😄')
+  false
+
+
+

@@ -177,7 +177,7 @@ ul, li {
   background-position: right center;
   border: 1px solid #ddd;
   margin: 0;
-  width: 80%;
+  width: 94%;
   border-radius: 15px;
   -webkit-transition: all 0.2s ease-in;
   -moz-transition: all 0.2s ease-in;
@@ -260,6 +260,13 @@ code {
   color: #666;
   font-family: Monaco, monospace;
   font-size: 11px; }
+
+.top-nav {
+  padding-bottom: 15px;
+  height: 50px; }
+
+.toggle-output * {
+  display: inline-block; }
 
 .tips {
   color: #777; }
